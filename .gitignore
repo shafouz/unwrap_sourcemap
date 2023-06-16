@@ -3,3 +3,4 @@ node_modules
 maps
 temp
 package-lock.json
+dist/
