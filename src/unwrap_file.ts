@@ -7,10 +7,9 @@ type PathData = {
   processed: string;
 };
 
-async function unwrap_file(filename: string) {
-  const sourcemapData = readFileSync(filename, "utf8");
+async function unwrap_file(source_data: string, output_dir: string) {
   const originalSources = await SourceMapConsumer.with(
-    sourcemapData,
+    source_data,
     null,
     async (consumer) => {
       return consumer.sources.reduce(
@@ -39,7 +38,9 @@ async function unwrap_file(filename: string) {
       .sort()[0]
   );
   for (let path_data of files) {
-    path_data.processed = `temp/${path_data.raw.substring(node_modules_root)}`;
+    path_data.processed = `${output_dir}/${path_data.raw.substring(
+      node_modules_root
+    )}`;
     const directoryPath = dirname(path_data.processed);
     mkdirSync(directoryPath, { recursive: true });
     console.log("DEBUGPRINT[1]: app.ts:68: path_data=", path_data);
