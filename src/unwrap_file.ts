@@ -27,10 +27,12 @@ async function unwrap_file(source_data: string, output_dir: string) {
   let files: PathData[] = [];
 
   for (const file of files_array) {
-    files.push({
+    let path_data: PathData = {
       raw: file,
       processed: "",
-    });
+    };
+
+    files.push(path_data);
 
     node_modules_count[file.indexOf("node_modules")] =
       node_modules_count[file.indexOf("node_modules")] + 1 || 0;
@@ -51,9 +53,12 @@ async function unwrap_file(source_data: string, output_dir: string) {
     const directoryPath = dirname(path_data.processed);
     mkdirSync(directoryPath, { recursive: true });
 
-    console.log("DEBUGPRINT[2]: unwrap_file.ts:55: path_data=", path_data);
-    writeFileSync(path_data.processed, originalSources[path_data.raw]);
+    try {
+      writeFileSync(path_data.processed, originalSources[path_data.raw]);
+    } catch {}
   }
+
+  console.log(originalSources);
 }
 
 export { unwrap_file };

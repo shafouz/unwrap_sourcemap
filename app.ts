@@ -7,7 +7,7 @@ if (process.argv.length < 3) {
 }
 
 const output_dir = process.argv[2];
-console.log("DEBUGPRINT[4]: app.ts:10: output_dir=", output_dir);
+// console.log("DEBUGPRINT[4]: app.ts:10: output_dir=", output_dir);
 
 let stdinBuffer = readFileSync(0);
 let lines: string[] = stdinBuffer.toString().split("\n");
