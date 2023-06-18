@@ -58,7 +58,7 @@ async function unwrap_file(source_data: string, output_dir: string) {
     } catch {}
   }
 
-  console.log(originalSources);
+  // console.log(originalSources);
 }
 
 export { unwrap_file };
