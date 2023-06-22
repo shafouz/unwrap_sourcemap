@@ -54,8 +54,6 @@ async function unwrap_file(source_data: string, output_dir: string) {
   // }
 }
 
-// function handle_processed(files: PathData[], output_dir: string) { }
-
 function format_path_data(files: PathData[], output_dir: string) {
   let node_modules_index = get_node_modules_index_for_set(files);
   let protocol_index = get_protocol_prefix_for_set(files);
@@ -67,7 +65,6 @@ function format_path_data(files: PathData[], output_dir: string) {
 
   let ret: PathData[];
 
-  // console.log("DEBUGPRINT[4]: unwrap_file.ts:69: slash_count=", slash_count);
   if (slash_count == 0) {
     ret = handle_multirepo(files, output_dir, protocol_index);
   } else {
@@ -98,19 +95,17 @@ function get_protocol_prefix_for_set(files: PathData[]): number {
   let protocol_prefix = {};
 
   for (let file of files) {
-    protocol_prefix[file.raw.indexOf("://") + 3] =
-      protocol_prefix[file.raw.indexOf("://") + 3] + 1 || 0;
+    protocol_prefix[file.raw.indexOf("://") + 1] =
+      protocol_prefix[file.raw.indexOf("://") + 1] + 1 || 0;
   }
 
   let keys = Object.keys(protocol_prefix)
     .filter((k) => k !== "-1")
     .sort();
 
-  console.log(
-    "DEBUGPRINT[10]: unwrap_file.ts:108: files[keys[0]]=",
-    files[keys[0]]
-  );
-  console.log("DEBUGPRINT[9]: unwrap_file.ts:107: keys=", keys);
+  // console.log(
+  //   files[keys[0]]
+  // );
   let protocol_prefix_root = parseInt(keys[0]);
 
   return protocol_prefix_root;
@@ -135,7 +130,6 @@ function get_slash_count_for_set(
     // };
   }
 
-  // console.log("DEBUGPRINT[7]: unwrap_file.ts:134: dbg=", dbg);
   let slash = parseInt(Object.keys(slash_count).sort()[0]);
 
   return slash;
